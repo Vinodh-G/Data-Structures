@@ -22,12 +22,15 @@ class ViewController: UIViewController {
         trie.insert(word: "Bat")
         trie.insert(word: "Bats")
         trie.insert(word: "Ball")
+        trie.insert(word: "Balls")
         
         print("Contains Bats \(trie.contains(word: "Bats"))")
         print("Contains Bars \(trie.contains(word: "Bars"))")
         print("Contains Cart \(trie.contains(word: "Cart"))")
         
         print("Suggestions for car : \(trie.getSuggestions(forString: "car"))")
+        trie.delete(word: "ball")
+        print("-> Suggestions for ba : \(trie.getSuggestions(forString: "ba"))")
     }
 
     override func didReceiveMemoryWarning() {

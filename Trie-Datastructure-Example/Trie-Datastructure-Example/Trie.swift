@@ -34,6 +34,8 @@ class Trie {
 }
 
 extension Trie {
+    
+    
     func insert(word : String) {
         guard !word.isEmpty else { return }
         
@@ -125,6 +127,29 @@ extension Trie {
             }
         }
         return suggestions
+    }
+    
+    func delete(word:String) {
+        
+        guard !word.isEmpty else { return }
+        let currentNode = getCurrentNode(forString: word)
+        delete(currentNode:currentNode)
+        
+    }
+    
+    func delete(currentNode:TrieNode <Character>){
+        
+        if currentNode.children.values.count == 0 {
+            let parent = currentNode.parent!
+            parent.children[currentNode.value!] = nil;
+            delete(currentNode: parent)
+        }
+        else if currentNode.children.values.count > 0 && currentNode.isCompleteWord {
+            currentNode.isCompleteWord = false;
+        }
+        else if currentNode.parent != nil {
+            delete(currentNode: currentNode.parent!)
+        }
     }
 }
 

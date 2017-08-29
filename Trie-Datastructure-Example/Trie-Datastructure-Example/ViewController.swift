@@ -47,14 +47,26 @@ class ViewController: UIViewController {
         print("Contains \(julian.firstName): \(peopleTrie.contains(element: julian))")
         print("Contains \(jake.firstName): \(peopleTrie.contains(element: jake))")
         
-        print("Suggestions for Jos :");
-        let suggestions = peopleTrie.getSuggestions(forString: "joe")
-        for person : Person in suggestions {
-            print("\(person.firstName) \(person.lastName)")
-        }
+        print("Suggestions for Jo :");
+        printSuggestions(suggestions: peopleTrie.getSuggestions(forString: "jo"))
+        
+        print("\nDelete Joes")
+        peopleTrie.delete(item: joes)
+        print("Suggestions for J :");
+        printSuggestions(suggestions: peopleTrie.getSuggestions(forString: "j"))
+        print("\nDelete Joe")
+        peopleTrie.delete(item: joe)
+        print("Suggestions for J :");
+        printSuggestions(suggestions: peopleTrie.getSuggestions(forString: "j"))
         
     }
-
+    
+    func printSuggestions(suggestions:[Person]){
+        for person : Person in suggestions {
+            print("\(person.firstName)")
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

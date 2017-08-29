@@ -130,5 +130,32 @@ extension Trie {
         }
         return suggestions
     }
+    
+    func delete(item:Element) {
+        
+        let currentNode = getCurrentNode(forString: item.trieKey)
+        delete(currentNode:currentNode)
+    }
+    
+    
+    func delete(currentNode:TrieNode<Element>){
+        
+        if currentNode.children.values.count == 0 && currentNode.isCompleteWord  {
+            currentNode.value = nil
+            currentNode.isCompleteWord = false
+            
+            if let parent = currentNode.parent {
+                parent.children[currentNode.nodeCh!] = nil
+                if !parent.isCompleteWord {
+                    delete(currentNode: parent)
+                }
+            }
+        }
+        else if currentNode.children.values.count > 0 && currentNode.isCompleteWord {
+            currentNode.isCompleteWord = false
+            currentNode.value = nil
+        }
+    }
+    
 }
 

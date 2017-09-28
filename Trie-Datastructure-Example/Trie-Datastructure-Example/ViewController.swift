@@ -13,56 +13,65 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let trie = Trie()
-        trie.insert(word: "Cat")
-        trie.insert(word: "Car")
-        trie.insert(word: "Cart")
-        trie.insert(word: "Cars")
-        trie.insert(word: "Cate")
-        trie.insert(word: "Bat")
-        trie.insert(word: "Bats")
-        trie.insert(word: "Ball")
+//        let trie = Trie()
+//        trie.insert(word: "Cat")
+//        trie.insert(word: "Car")
+//        trie.insert(word: "Cart")
+//        trie.insert(word: "Cars")
+//        trie.insert(word: "Cate")
+//        trie.insert(word: "Bat")
+//        trie.insert(word: "Bats")
+//        trie.insert(word: "Ball")
+//
+//        print("Contains Bats \(trie.contains(word: "Bats"))")
+//        print("Contains Bars \(trie.contains(word: "Bars"))")
+//        print("Contains Cart \(trie.contains(word: "Cart"))")
+//
+//        print("Suggestions for car : \(trie.getSuggestions(forString: "car"))")
         
-        print("Contains Bats \(trie.contains(word: "Bats"))")
-        print("Contains Bars \(trie.contains(word: "Bars"))")
-        print("Contains Cart \(trie.contains(word: "Cart"))")
         
-        print("Suggestions for car : \(trie.getSuggestions(forString: "car"))")
+        let peopleTrie = Trie<Person>()
+        let john = Person(inFirstName: "John", inLastName: "Carter", inContact: "234234")
+        let joe = Person(inFirstName: "Joe", inLastName: "Luke", inContact: "234244")
+        let joes = Person(inFirstName: "Joes", inLastName: "Cashin", inContact: "234244")
+        let jake = Person(inFirstName: "Jake", inLastName: "William", inContact: "234254")
+        let julian = Person(inFirstName: "Jalian", inLastName: "Thomas", inContact: "32423")
+        
+        peopleTrie.insert(item: john)
+        peopleTrie.insert(item: joe)
+        peopleTrie.insert(item: joes)
+        peopleTrie.insert(item: jake)
+        
+        print("Contains \(john.firstName): \(peopleTrie.contains(element: john))")
+        print("Contains \(joe.firstName): \(peopleTrie.contains(element: joe))")
+        print("Contains \(julian.firstName): \(peopleTrie.contains(element: julian))")
+        print("Contains \(jake.firstName): \(peopleTrie.contains(element: jake))")
+        
+        print("Suggestions for Jo :");
+        printSuggestions(suggestions: peopleTrie.getSuggestions(forString: "jo"))
+        
+        print("\nDelete Joes")
+        peopleTrie.delete(item: joes)
+        print("Suggestions for J :");
+        printSuggestions(suggestions: peopleTrie.getSuggestions(forString: "j"))
+        print("\nDelete Joe")
+        peopleTrie.delete(item: joe)
+        print("Suggestions for J :");
+        printSuggestions(suggestions: peopleTrie.getSuggestions(forString: "j"))
+        
     }
-
+    
+    func printSuggestions(suggestions:[Person]){
+        for person : Person in suggestions {
+            print("\(person.firstName)")
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-}
 
-class Employee {
-    var name    : String
-    var title   : String
-    var iCard   : ICard?
-    init(inName:String, inTitle:String) {
-        name = inName
-        title = inTitle
-    }
-    deinit {
-        print("Employee : \(name) removed");
-    }
-}
 
-class ICard {
-    var uniqueId : String
-    weak var employee : Employee
-    init(inUniqueId:String, inEmployee:Employee) {
-        uniqueId = inUniqueId
-        employee = inEmployee
-    }
-    
-    deinit { print("ID \(uniqueId) removed") }
-    
-    func displayBadge() {
-        print("Name : \(employee.name)")
-        print("title : \(employee.title)")
-    }
 }
 

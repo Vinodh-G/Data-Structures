@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		87FF0C831F55A8310043CC4F /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FF0C821F55A8310043CC4F /* Person.swift */; };
 		87FF17671F35AE8400EBBDE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FF17661F35AE8400EBBDE7 /* AppDelegate.swift */; };
 		87FF17691F35AE8400EBBDE7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FF17681F35AE8400EBBDE7 /* ViewController.swift */; };
 		87FF176C1F35AE8400EBBDE7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87FF176A1F35AE8400EBBDE7 /* Main.storyboard */; };
@@ -17,7 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		87FF0C821F55A8310043CC4F /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		87FF17631F35AE8400EBBDE7 /* Trie-Datastructure-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trie-Datastructure-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87FF17661F35AE8400EBBDE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87FF17681F35AE8400EBBDE7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,7 +59,6 @@
 				87FF17661F35AE8400EBBDE7 /* AppDelegate.swift */,
 				87FF17681F35AE8400EBBDE7 /* ViewController.swift */,
 				87FF17781F35B03100EBBDE7 /* Trie.swift */,
-				87FF0C821F55A8310043CC4F /* Person.swift */,
 				87FF176A1F35AE8400EBBDE7 /* Main.storyboard */,
 				87FF176D1F35AE8400EBBDE7 /* Assets.xcassets */,
 				87FF176F1F35AE8400EBBDE7 /* LaunchScreen.storyboard */,
@@ -143,7 +140,6 @@
 			files = (
 				87FF17791F35B03100EBBDE7 /* Trie.swift in Sources */,
 				87FF17691F35AE8400EBBDE7 /* ViewController.swift in Sources */,
-				87FF0C831F55A8310043CC4F /* Person.swift in Sources */,
 				87FF17671F35AE8400EBBDE7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,7 +316,6 @@
 				87FF17771F35AE8400EBBDE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

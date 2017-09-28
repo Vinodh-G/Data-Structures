@@ -8,31 +8,25 @@
 
 import Foundation
 
-protocol TrieValue: Hashable {
-    var trieKey:String { get }
-}
 
-class TrieNode < Element:TrieValue> {
-    var nodeCh : Character?
-    var value  : Element?
+class TrieNode < T:Hashable> {
+    var value : T?
     weak var parent : TrieNode?
-    var children : [Character:TrieNode] = [:]
+    var children : [T:TrieNode] = [:]
     var isCompleteWord : Bool = false
-    init(inNodeCh:Character? = nil, inValue:Element? = nil, inParent:TrieNode? = nil) {
-        nodeCh = inNodeCh
+    init(inValue:T? = nil, inParent:TrieNode? = nil) {
         value = inValue
         parent = inParent
     }
     
-    func add(newNodeKey : Character) {
-        
-        guard children[newNodeKey] == nil else { return }
-        children[newNodeKey] = TrieNode(inNodeCh: newNodeKey, inParent: self)
+    func add(newChild : T) {
+        guard children[newChild] == nil else { return }
+        children[newChild] = TrieNode(inValue: newChild, inParent: self)
     }
 }
 
-class Trie <Element:TrieValue> {
-    typealias Node = TrieNode<Element>
+class Trie {
+    typealias Node = TrieNode<Character>
     fileprivate let root : Node
     init() {
         root = Node()
@@ -40,38 +34,37 @@ class Trie <Element:TrieValue> {
 }
 
 extension Trie {
-    func insert(item : Element) {
-        
-        guard !item.trieKey.isEmpty else { return }
+    func insert(word : String) {
+        guard !word.isEmpty else { return }
         
         var currentNode = root
         var currentIndex = 0;
-        let characters = Array(item.trieKey.lowercased().characters)
+        let characters = Array(word.lowercased().characters)
         
         while currentIndex < characters.count {
-            let nodeChar = characters[currentIndex]
-            if let child = currentNode.children[nodeChar] {
+            let character = characters[currentIndex]
+            
+            if let child = currentNode.children[character] {
                 currentNode = child
             } else {
-                currentNode.add(newNodeKey: nodeChar)
-                currentNode = currentNode.children[nodeChar]!
+                currentNode.add(newChild: character)
+                currentNode = currentNode.children[character]!
             }
             currentIndex += 1
         }
         
         if currentIndex == characters.count {
             currentNode.isCompleteWord = true
-            currentNode.value = item
         }
     }
     
-    func contains(element : Element) -> Bool {
+    func contains(word : String) -> Bool {
         var containsWord = false
-        guard !element.trieKey.isEmpty else { return  containsWord }
+        guard !word.isEmpty else { return  containsWord }
         
         var currentIndex = 0
         var currentNode = root
-        let characters = Array(element.trieKey.lowercased().characters)
+        let characters = Array(word.lowercased().characters)
         
         while currentIndex < characters.count, let child = currentNode.children[characters[currentIndex]] {
             currentNode = child
@@ -85,19 +78,19 @@ extension Trie {
         return containsWord
     }
     
-    func getSuggestions(forString:String) -> [Element] {
-        var suggestions : [Element] = []
+    func getSuggestions(forString:String) -> [String] {
+        var suggestions : [String] = []
         
         guard !forString.isEmpty else { return  suggestions }
         
         let currentNode = getCurrentNode(forString:forString)
         
-        suggestions += getStringSuggestions(fromNode: currentNode)
-        
+        suggestions += getStringSuggestions(fromNode: currentNode, withPrefix: forString)
+
         return suggestions
     }
     
-    func getCurrentNode(forString:String) -> TrieNode <Element> {
+    func getCurrentNode(forString:String) -> TrieNode<Character> {
         
         var currentIndex = 0
         var currentNode = root
@@ -112,50 +105,26 @@ extension Trie {
         return currentNode
     }
     
-    func getStringSuggestions(fromNode:TrieNode<Element>) -> [Element] {
-        var suggestions:[Element] = []
+    func getStringSuggestions(fromNode:TrieNode<Character>, withPrefix:String) -> [String] {
+        var suggestions:[String] = []
         
-        if fromNode.children.values.count == 0 && fromNode.value != nil {
-            suggestions.append(fromNode.value!)
+        if fromNode.children.values.count == 0 {
+            suggestions.append(withPrefix)
             return suggestions
         } else {
             
-            if fromNode.isCompleteWord && fromNode.value != nil {
-                suggestions.append(fromNode.value!)
+            if fromNode.isCompleteWord {
+                suggestions.append(withPrefix)
             }
             
             for node : TrieNode in fromNode.children.values {
-                suggestions += getStringSuggestions(fromNode: node)
+                var suggestionString = withPrefix
+                suggestionString.append(node.value!)
+                
+                suggestions += getStringSuggestions(fromNode: node, withPrefix: suggestionString)
             }
         }
         return suggestions
     }
-    
-    func delete(item:Element) {
-        
-        let currentNode = getCurrentNode(forString: item.trieKey)
-        delete(currentNode:currentNode)
-    }
-    
-    
-    func delete(currentNode:TrieNode<Element>){
-        
-        if currentNode.children.values.count == 0 && currentNode.isCompleteWord  {
-            currentNode.value = nil
-            currentNode.isCompleteWord = false
-            
-            if let parent = currentNode.parent {
-                parent.children[currentNode.nodeCh!] = nil
-                if !parent.isCompleteWord {
-                    delete(currentNode: parent)
-                }
-            }
-        }
-        else if currentNode.children.values.count > 0 && currentNode.isCompleteWord {
-            currentNode.isCompleteWord = false
-            currentNode.value = nil
-        }
-    }
-    
 }
 

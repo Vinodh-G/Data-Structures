@@ -7,30 +7,28 @@
 //
 
 import Foundation
+import Trie
 
 class Person: TrieValue {
-    
     let firstName: String
     let lastName : String
     let uniqueId : String
     let contact : String
-    
-    var trieKey: String {
+
+    var key: String {
         return firstName
     }
-    
+
     init(inFirstName:String, inLastName:String, inContact:String) {
         firstName = inFirstName
         lastName = inLastName
         contact = inContact
         uniqueId = ProcessInfo.processInfo.globallyUniqueString
     }
-    
+
     var hashValue: Int = 0
-    
+
     static func ==(lhs: Person, rhs: Person) -> Bool {
         return lhs.uniqueId == rhs.uniqueId
     }
-    
-    
 }
